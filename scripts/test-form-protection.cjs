@@ -28,7 +28,8 @@ function createHarness({
   lang = 'en', responseStatus = 200, responseBody = {}, siteKey = '',
   company = 'Acme Greenhouse', whatsapp = '+1 555 123 4567',
   message = 'We need propagation plugs for a commercial greenhouse trial.',
-  fetchImpl, widgetWidth = 400, renderThrows = false, resetThrows = false
+  fetchImpl, widgetWidth = 400, renderThrows = false, resetThrows = false,
+  analyticsThrows = false
 } = {}) {
   const fields = {
     honeypot: element('input', ''), whatsapp: element('input', whatsapp),
@@ -63,7 +64,10 @@ function createHarness({
   harness.form = form;
   const window = {
     addEventListener(type, handler) { harness.windowHandlers[type] = handler; },
-    gtag(...args) { harness.gtagCalls.push(args); },
+    gtag(...args) {
+      if (analyticsThrows) throw new Error('Analytics unavailable');
+      harness.gtagCalls.push(args);
+    },
     setTimeout(callback) { harness.timers.set(++timerId, callback); return timerId; },
     clearTimeout(id) { harness.timers.delete(id); }
   };
@@ -126,6 +130,8 @@ const protectedForm = (options = {}) => createHarness({ siteKey: 'public-unit-te
   assert.equal(success.fetchCalls.length, 1);
   assert.equal(success.gtagCalls[0][1], 'generate_lead');
   const eventParameters = success.gtagCalls[0][2];
+  assert.equal(eventParameters.site_language, 'en');
+  assert.equal(eventParameters.content_group, 'contact');
   for (const pii of ['email', 'whatsapp', 'company', 'cf-turnstile-response']) {
     assert.ok(!(pii in eventParameters), 'Do not include contact details or verification tokens in analytics.');
   }
@@ -133,6 +139,13 @@ const protectedForm = (options = {}) => createHarness({ siteKey: 'public-unit-te
   assert.ok(success.status.className.includes('form-success'));
   assert.equal(success.button.disabled, false);
   assert.equal(success.scripts.length, 0, 'No third-party script before a real key is configured.');
+
+  const analyticsFailure = createHarness({ analyticsThrows: true });
+  await analyticsFailure.submit();
+  assert.equal(analyticsFailure.form.resetCount, 1);
+  assert.ok(analyticsFailure.status.className.includes('form-success'),
+    'A tracking failure must not invite buyers to resubmit an accepted inquiry.');
+  assert.equal(analyticsFailure.button.disabled, false);
 
   const rateLimited = createHarness({ lang: 'es', responseStatus: 429 });
   await rateLimited.submit();

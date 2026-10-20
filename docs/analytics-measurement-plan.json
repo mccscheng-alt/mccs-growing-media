@@ -1,0 +1,23 @@
+{
+  "measurement_id": "G-GLM9JS10QN",
+  "primary_key_event": "generate_lead",
+  "default_lead_value": null,
+  "events": [
+    {"name": "generate_lead", "source": "successful_form_response", "key_event": true, "meaning": "Form endpoint accepted an inquiry; not a qualified lead or an order."},
+    {"name": "contact_cta_click", "source": "site_code", "key_event": false, "meaning": "Visitor clicked an on-site contact-page link; not an inquiry."},
+    {"name": "email_click", "source": "site_code", "key_event": false, "meaning": "Visitor clicked a mailto link; email delivery is not confirmed."},
+    {"name": "phone_click", "source": "site_code", "key_event": false, "meaning": "Visitor clicked a tel link; a call is not confirmed."},
+    {"name": "whatsapp_click", "source": "ga4_derived_event", "key_event": false, "conditions": {"event_name": "click", "link_domain": "wa.me"}, "meaning": "Visitor clicked WhatsApp; a message or reply is not confirmed."},
+    {"name": "resource_download", "source": "site_code", "key_event": false, "meaning": "Click on a same-origin PDF, XLSX or CSV link; not proof of completed download."},
+    {"name": "ai_referral_session", "source": "existing_site_code", "key_event": false, "meaning": "Browser-reported AI referrer; not every AI-origin visit is identifiable."}
+  ],
+  "event_scoped_custom_dimensions": [
+    {"name": "Site language", "parameter": "site_language"},
+    {"name": "Link location", "parameter": "link_location"}
+  ],
+  "do_not_add_together": [
+    ["click", "whatsapp_click"],
+    ["file_download", "resource_download"],
+    ["form_submit", "generate_lead"]
+  ]
+}
