@@ -19,8 +19,8 @@ for (const filePath of fs.readdirSync(root, { recursive: true })) {
 
   if (!html.includes(marker)) {
     html = html.replace(
-      /<script\s+async(?:="")?\s+src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-JGR2SQBQHW"><\/script>/,
-      `${consentInit}<script async src="https://www.googletagmanager.com/gtag/js?id=G-JGR2SQBQHW"></script>`
+      /<script\s+async(?:="")?\s+src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-GLM9JS10QN"><\/script>/,
+      `${consentInit}<script async src="https://www.googletagmanager.com/gtag/js?id=G-GLM9JS10QN"></script>`
     );
   } else {
     html = html.replace(/<script id="mccs-consent-default">[\s\S]*?<\/script>/, consentInit);
