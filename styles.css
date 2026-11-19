@@ -829,3 +829,8 @@ img{max-width:100%;height:auto}
 .page-insights.root-gallery-page .page-hero .authority-hero-grid{background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .root-gallery-page .authority-hero-media img{aspect-ratio:3/4;object-fit:contain}
 .root-gallery-page .whatsapp-float{position:static;display:flex;width:max-content;max-width:92%;margin:16px auto;box-shadow:none}
+.language-switcher.has-language-select a{display:none!important}
+.language-select{display:block;min-height:44px;width:180px;max-width:100%;padding:8px 12px;border:1px solid #cbd6cc;border-radius:6px;background:#fff;color:#17452b;font:inherit;font-size:14px;letter-spacing:0;cursor:pointer}
+.language-select:focus-visible{outline:2px solid #167b43;outline-offset:3px}
+.language-switcher.has-language-select{min-width:0}
+@media(max-width:640px){.language-select{width:100%}}
