@@ -58,7 +58,7 @@ Do not modify these files, settings or data unless the user explicitly asks for 
 - MOQ values
 - Carton quantity or quantity-per-box values
 - Formspree endpoint
-- Google Analytics ID: `G-JGR2SQBQHW`
+- Google Analytics ID: `G-GLM9JS10QN`
 - Vercel configuration
 - `/admin.html`
 - `/privacy.html`

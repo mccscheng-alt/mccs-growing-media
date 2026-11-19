@@ -29,7 +29,7 @@ Never modify these unless the user explicitly requests that exact file or value:
 - MOQ values
 - Carton quantity or quantity-per-box values
 - Formspree endpoint
-- Google Analytics ID: `G-JGR2SQBQHW`
+- Google Analytics ID: `G-GLM9JS10QN`
 - Vercel configuration
 - `/admin.html`
 - `/privacy.html`
@@ -121,7 +121,7 @@ Each PR description must include:
 - Confirmation that product models, dimensions, MOQ and carton quantities were not modified
 - Confirmation that `data/products.json` was not modified
 - Confirmation that Formspree endpoint was not modified
-- Confirmation that GA ID `G-JGR2SQBQHW` was not modified
+- Confirmation that GA ID `G-GLM9JS10QN` was not modified
 - Confirmation that Vercel configuration was not modified
 - Confirmation whether `/ar/`, `/es/`, `/admin.html`, `/privacy.html` or `/terms.html` were touched
 
@@ -135,7 +135,7 @@ Before merging any PR, the reviewer should check:
 - `data/products.json` is unchanged unless explicitly requested.
 - Product model names, sizes, MOQ and carton quantities are unchanged.
 - Formspree endpoint is unchanged.
-- GA ID remains `G-JGR2SQBQHW`.
+- GA ID remains `G-GLM9JS10QN`.
 - Vercel configuration is unchanged.
 - Buyer-facing copy does not contain internal notes, demo labels, preview text or unfinished-state wording.
 - No third-party trademark is used as a fake case-study title or buyer proof.

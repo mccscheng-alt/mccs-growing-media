@@ -148,12 +148,18 @@
 
   const trackSuccessfulLead = () => {
     if (typeof window.gtag !== 'function') return;
-    window.gtag('event', 'generate_lead', {
-      form_id: 'quoteForm',
-      form_language: language,
-      lead_type: 'sample_request',
-      transport_type: 'beacon'
-    });
+    try {
+      window.gtag('event', 'generate_lead', {
+        form_id: 'quoteForm',
+        form_language: language,
+        site_language: (document.documentElement.lang || 'en').toLowerCase(),
+        content_group: 'contact',
+        lead_type: 'sample_request',
+        transport_type: 'beacon'
+      });
+    } catch {
+      // Analytics failure must not change the result of an accepted inquiry.
+    }
   };
 
   const updateVerification = (message, canRetry = false) => {

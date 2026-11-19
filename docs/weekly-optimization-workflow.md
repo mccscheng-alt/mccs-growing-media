@@ -68,7 +68,7 @@ Weekly optimization must not modify:
 - MOQ values
 - Carton quantity or quantity-per-box values
 - Formspree endpoint
-- Google Analytics ID `G-JGR2SQBQHW`
+- Google Analytics ID `G-GLM9JS10QN`
 - Vercel configuration
 - `/admin.html`
 - `/privacy.html` and `/terms.html` unless explicitly requested
@@ -112,7 +112,7 @@ A human reviewer must approve and merge the PR after checking:
 - Scope is correct
 - Product data is untouched
 - Formspree endpoint is unchanged
-- GA ID remains `G-JGR2SQBQHW`
+- GA ID remains `G-GLM9JS10QN`
 - Vercel config is unchanged
 - Vercel Preview looks correct
 

@@ -96,6 +96,31 @@
       }
     });
 
+    var siteLanguage = (document.documentElement.lang || 'en').toLowerCase();
+    var pageSection = window.location.pathname.replace(/\/index\.html$/, '/').replace(/^\/(es|ar|cn)(?=\/|$)/, '').split('/')[1] || 'home';
+    var contentGroups = {
+      home: 'home', products: 'products', contact: 'contact', insights: 'insights',
+      about: 'about', applications: 'applications', guides: 'guides',
+      'sample-shipping': 'sample_shipping', 'private-label': 'private_label',
+      'technical-evidence': 'technical_evidence', 'global-partners': 'global_partners',
+      'middle-east': 'middle_east'
+    };
+    function trackBuyerInteraction(name, parameters){
+      if(typeof window.gtag !== 'function') return;
+      try{
+        window.gtag('event', name, Object.assign({
+          site_language: siteLanguage,
+          content_group: contentGroups[pageSection] || 'other'
+        }, parameters));
+      }catch(e){ /* Analytics must not interrupt navigation or a successful inquiry. */ }
+    }
+    function linkLocation(link){
+      if(link.closest('.site-header')) return 'header';
+      if(link.closest('.site-footer')) return 'footer';
+      if(link.classList.contains('whatsapp-float')) return 'floating';
+      return 'content';
+    }
+
     var quoteForm = document.getElementById('quoteForm');
     if(quoteForm && window.fetch && window.FormData && !document.querySelector('script[src^="/assets/form-protection.js"]')){
       var lang = (document.documentElement.lang || 'en').split('-')[0];
@@ -153,13 +178,13 @@
           status.className = 'form-status form-success';
           status.textContent = copy.success;
           quoteForm.reset();
-          if(typeof window.gtag === 'function'){
-            window.gtag('event', 'generate_lead', {
-              form_id: 'quoteForm',
-              form_name: 'MCCS Sample Request',
-              language: lang
-            });
-          }
+          trackBuyerInteraction('generate_lead', {
+            form_id: 'quoteForm',
+            form_name: 'MCCS Sample Request',
+            language: lang,
+            form_language: lang,
+            lead_type: 'sample_request'
+          });
         }).catch(function(){
           status.className = 'form-status form-error';
           status.textContent = copy.error;
@@ -170,19 +195,33 @@
     }
 
     document.addEventListener('click', function(event){
+      if(event.defaultPrevented) return;
       var link = event.target.closest && event.target.closest('a[href]');
       if(!link) return;
       var href = link.getAttribute('href') || '';
-      if(!/\.(pdf|xlsx|csv)(?:$|[?#])/i.test(href)) return;
-      if(typeof window.gtag === 'function'){
-        var cleanHref = href.split(/[?#]/)[0];
-        var fileName = cleanHref.split('/').pop() || cleanHref;
-        window.gtag('event', 'resource_download', {
-          file_name: fileName,
-          file_extension: (fileName.split('.').pop() || '').toLowerCase(),
-          link_url: link.href
-        });
+      var position = linkLocation(link);
+      if(/^mailto:/i.test(href)){
+        trackBuyerInteraction('email_click', {link_location: position});
+        return;
       }
+      if(/^tel:/i.test(href)){
+        trackBuyerInteraction('phone_click', {link_location: position});
+        return;
+      }
+      var target;
+      try{ target = new URL(link.href, window.location.origin); }catch(e){ return; }
+      if(target.origin !== window.location.origin) return;
+      if(/^\/(?:es\/|ar\/|cn\/)?contact(?:\/(?:index\.html)?)?$/.test(target.pathname)){
+        trackBuyerInteraction('contact_cta_click', {link_location: position});
+      }
+      if(!/\.(pdf|xlsx|csv)$/i.test(target.pathname)) return;
+      var fileName = target.pathname.split('/').pop();
+      trackBuyerInteraction('resource_download', {
+        file_name: fileName,
+        file_extension: fileName.split('.').pop().toLowerCase(),
+        link_location: position,
+        link_url: target.origin + target.pathname
+      });
     });
 
     // Keep every application video in one factory section, separate from product cards.
