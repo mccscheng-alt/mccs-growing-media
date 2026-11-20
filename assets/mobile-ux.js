@@ -277,6 +277,42 @@
       }).catch(function(){ /* Product catalog remains usable without the optional video library. */ });
     }
 
+    function refreshLanguageSelect(){
+      var switcher = document.querySelector('.language-switcher');
+      if(!switcher) return;
+      var links = Array.from(switcher.querySelectorAll('a[lang]'));
+      if(links.length < 2) return;
+      var names = {en:'English', 'zh-CN':'中文', es:'Español', ar:'العربية'};
+      var lang = document.documentElement.lang || 'en';
+      var labels = {en:'Choose language', 'zh-CN':'选择语言', es:'Elegir idioma', ar:'اختر اللغة'};
+      var select = switcher.querySelector('select');
+      if(!select){
+        select = document.createElement('select');
+        select.className = 'language-select';
+        select.setAttribute('aria-label', labels[lang] || labels.en);
+        select.addEventListener('change', function(){
+          var option = select.selectedOptions[0];
+          if(!option) return;
+          var destination = new URL(option.value, window.location.origin);
+          if(destination.origin !== window.location.origin) return;
+          try{localStorage.setItem('mccs_language', option.lang === 'zh-CN' ? 'cn' : option.lang);}catch(e){}
+          window.location.assign(destination.href);
+        });
+        switcher.appendChild(select);
+      }
+      select.replaceChildren();
+      links.forEach(function(link){
+        var option = document.createElement('option');
+        option.value = link.getAttribute('href');
+        option.lang = link.lang;
+        option.textContent = names[link.lang] || link.textContent;
+        option.selected = link.lang.toLowerCase() === lang.toLowerCase();
+        select.appendChild(option);
+      });
+      switcher.classList.add('has-language-select');
+    }
+    refreshLanguageSelect();
+
     // Suggest an available translation from the visitor's browser preference.
     // The site never redirects automatically, so shared URLs and crawler signals stay stable.
     fetch('/assets/language-routes.json', {cache:'force-cache'}).then(function(response){
@@ -306,6 +342,7 @@
         });
       }
 
+      refreshLanguageSelect();
       var preferred = '';
       try{preferred = localStorage.getItem('mccs_language') || '';}catch(e){}
       if(!preferred){

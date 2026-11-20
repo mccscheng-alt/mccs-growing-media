@@ -1419,5 +1419,93 @@
       "label": "EN",
       "href": "/middle-east/"
     }
+  ],
+  "/ar/insights/strawberry-runner-propagation-plugs/": [
+    {
+      "locale": "ar",
+      "label": "AR",
+      "href": "/ar/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "cn",
+      "label": "中文",
+      "href": "/cn/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "es",
+      "label": "ES",
+      "href": "/es/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "en",
+      "label": "EN",
+      "href": "/insights/strawberry-runner-propagation-plugs/"
+    }
+  ],
+  "/cn/insights/strawberry-runner-propagation-plugs/": [
+    {
+      "locale": "ar",
+      "label": "AR",
+      "href": "/ar/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "cn",
+      "label": "中文",
+      "href": "/cn/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "es",
+      "label": "ES",
+      "href": "/es/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "en",
+      "label": "EN",
+      "href": "/insights/strawberry-runner-propagation-plugs/"
+    }
+  ],
+  "/es/insights/strawberry-runner-propagation-plugs/": [
+    {
+      "locale": "ar",
+      "label": "AR",
+      "href": "/ar/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "cn",
+      "label": "中文",
+      "href": "/cn/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "es",
+      "label": "ES",
+      "href": "/es/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "en",
+      "label": "EN",
+      "href": "/insights/strawberry-runner-propagation-plugs/"
+    }
+  ],
+  "/insights/strawberry-runner-propagation-plugs/": [
+    {
+      "locale": "ar",
+      "label": "AR",
+      "href": "/ar/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "cn",
+      "label": "中文",
+      "href": "/cn/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "es",
+      "label": "ES",
+      "href": "/es/insights/strawberry-runner-propagation-plugs/"
+    },
+    {
+      "locale": "en",
+      "label": "EN",
+      "href": "/insights/strawberry-runner-propagation-plugs/"
+    }
   ]
 }
