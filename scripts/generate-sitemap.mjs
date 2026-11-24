@@ -17,6 +17,7 @@ const SKIP_DIRS = new Set([
   'scripts'
 ]);
 const SKIP_FILES = new Set(['admin.html', 'privacy.html', 'terms.html']);
+const SKIP_URL_PATHS = new Set(['/guides/']);
 const CORE_PATHS = [
   '/',
   '/products/',
@@ -65,7 +66,9 @@ async function findBuyerPages(dir) {
     const relativePath = toPosix(fullPath);
     const html = await fs.readFile(fullPath, 'utf8');
     if (/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) continue;
-    pages.push({ relativePath, urlPath: toUrlPath(relativePath) });
+    const urlPath = toUrlPath(relativePath);
+    if (SKIP_URL_PATHS.has(urlPath)) continue;
+    pages.push({ relativePath, urlPath });
   }
   return pages;
 }
